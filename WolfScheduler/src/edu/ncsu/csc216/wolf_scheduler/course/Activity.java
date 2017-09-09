@@ -5,7 +5,7 @@ package edu.ncsu.csc216.wolf_scheduler.course;
  * Subclasses include courses and events.
  * @author Noah Benveniste
  */
-public abstract class Activity {
+public abstract class Activity implements Conflict {
 
 	/** Activity's title. */
 	private String title;
@@ -185,6 +185,15 @@ public abstract class Activity {
 	 * @return true if the Activities are duplicates, false otherwise
 	 */
 	public abstract boolean isDuplicate(Activity activity);
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	/** Overridden hashCode() and equals() */
@@ -235,5 +244,4 @@ public abstract class Activity {
 			return false;
 		return true;
 	}
-
 }
