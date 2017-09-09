@@ -34,6 +34,14 @@ public class ActivityTest {
 	    } catch (ConflictException e) {
 	        fail("A ConflictException was thrown when two Activities at the same time on completely distinct days were compared.");
 	    }
+	    //Same test as above but objects swapped to check for commutativity of method
+	    try {
+	        a2.checkConflict(a1);
+	        assertEquals("Incorrect meeting string for this Activity.", "MW 1:30PM-2:45PM", a1.getMeetingString());
+	        assertEquals("Incorrect meeting string for possibleConflictingActivity.", "TH 1:30PM-2:45PM", a2.getMeetingString());
+	    } catch (ConflictException e) {
+	        fail("A ConflictException was thrown when two Activities at the same time on completely distinct days were compared.");
+	    }
 	    
 	    //Test checking for a conflict with two activities that DO conflict
 	    //Update a1 with the same meeting days and a start time that overlaps the end time of a2
@@ -46,6 +54,36 @@ public class ActivityTest {
 	        //Check that the internal state didn't change during method call.
 	        assertEquals("TH 2:45PM-3:30PM", a1.getMeetingString());
 	        assertEquals("TH 1:30PM-2:45PM", a2.getMeetingString());
+	    }
+	    //Test for conflict on a single day
+	    a1.setMeetingDays("H");
+	    a1.setActivityTime(1445, 1530);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 2:45PM-3:30PM", a1.getMeetingString());
+	        assertEquals("TH 1:30PM-2:45PM", a2.getMeetingString());
+	    }
+	    //Test case where end time of one activity is the start time of the other
+	    a2.setActivityTime(1530, 1630);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 2:45PM-3:30PM", a1.getMeetingString());
+	        assertEquals("TH 3:30PM-4:30PM", a2.getMeetingString());
+	    }
+	    //Check for commutativity with the above case
+	    try {
+	        a2.checkConflict(a1);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 2:45PM-3:30PM", a1.getMeetingString());
+	        assertEquals("TH 3:30PM-4:30PM", a2.getMeetingString());
 	    }
 	}
 }

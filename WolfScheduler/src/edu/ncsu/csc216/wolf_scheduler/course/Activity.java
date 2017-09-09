@@ -187,7 +187,11 @@ public abstract class Activity implements Conflict {
 	public abstract boolean isDuplicate(Activity activity);
 	
 	/**
-	 * 
+	 * Checks for conflict between two Activities. An Activity is in conflict with another if
+	 * at least one of their meeting days are the same and the meeting times overlap, including
+	 * the case where the end time of one activity is the same as the start time of the other.
+	 * @param possibleConflictingActivity The Activity to check for conflicts with
+	 * @throws ConflictException if the Activities conflict
 	 */
 	@Override
 	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
