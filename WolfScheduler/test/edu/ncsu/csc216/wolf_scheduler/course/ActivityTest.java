@@ -12,13 +12,6 @@ import org.junit.Test;
 public class ActivityTest {
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
 	 * Test method for checkConflict() implementation in Activity
 	 */
 	@Test

@@ -12,13 +12,6 @@ import org.junit.Test;
 public class ConflictExceptionTest {
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
 	 * Test method for ConflictException constructor with message parameter.
 	 */
 	@Test

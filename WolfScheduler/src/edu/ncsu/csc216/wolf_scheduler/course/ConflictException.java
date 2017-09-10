@@ -13,6 +13,7 @@ public class ConflictException extends Exception {
 	
 	/**
 	 * Constructor for ConflictException given a custom error message.
+	 * @param customMsg User-specified error message for the exception
 	 */
 	public ConflictException(String customMsg) {
 		super(customMsg);
