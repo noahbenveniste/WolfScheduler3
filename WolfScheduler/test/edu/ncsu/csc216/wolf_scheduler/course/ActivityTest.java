@@ -85,5 +85,79 @@ public class ActivityTest {
 	        assertEquals("H 2:45PM-3:30PM", a1.getMeetingString());
 	        assertEquals("TH 3:30PM-4:30PM", a2.getMeetingString());
 	    }
+	    
+	    //Testing different combinations of overlapping time intervals
+	    a1.setActivityTime(800, 1000);
+	    a2.setActivityTime(900, 1100);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 9:00AM-11:00AM", a2.getMeetingString());
+	    }
+	    try {
+	        a2.checkConflict(a1);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 9:00AM-11:00AM", a2.getMeetingString());
+	    }
+	    
+	    a2.setActivityTime(700, 900);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 7:00AM-9:00AM", a2.getMeetingString());
+	    }
+	    try {
+	        a2.checkConflict(a1);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 7:00AM-9:00AM", a2.getMeetingString());
+	    }
+	    
+	    a2.setActivityTime(700, 1200);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 7:00AM-12:00PM", a2.getMeetingString());
+	    }
+	    try {
+	        a2.checkConflict(a1);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 7:00AM-12:00PM", a2.getMeetingString());
+	    }
+	    
+	    a2.setActivityTime(830, 900);
+	    try {
+	        a1.checkConflict(a2);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 8:30AM-9:00AM", a2.getMeetingString());
+	    }
+	    try {
+	        a2.checkConflict(a1);
+	        fail(); //ConflictException should have been thrown, but was not.
+	    } catch (ConflictException e) {
+	        //Check that the internal state didn't change during method call.
+	        assertEquals("H 8:00AM-10:00AM", a1.getMeetingString());
+	        assertEquals("TH 8:30AM-9:00AM", a2.getMeetingString());
+	    } 
 	}
 }

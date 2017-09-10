@@ -195,10 +195,23 @@ public abstract class Activity implements Conflict {
 	 */
 	@Override
 	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
-		// TODO Auto-generated method stub
-		
+		String str1 = this.getMeetingDays();
+		String str2 = possibleConflictingActivity.getMeetingDays();
+		int str1Start = this.getStartTime();
+		int str1End = this.getEndTime();
+		int str2Start = possibleConflictingActivity.getStartTime();
+		int str2End = possibleConflictingActivity.getEndTime();
+		for (int i = 0; i < str1.length(); i++) {
+			for (int j  = 0; j < str2.length(); j++) {
+				if (str1.charAt(i) == str2.charAt(j)) {
+					if ((str1Start >= str2Start && str1Start <= str2End) || (str1End >= str2Start && str1End <= str2End) ||
+							(str2Start >= str1Start && str2Start <= str1End && str2End >= str1Start && str2End <= str1End)) {
+						throw new ConflictException();
+					}
+				}
+			}
+		}
 	}
-
 	
 	/** Overridden hashCode() and equals() */
 	
