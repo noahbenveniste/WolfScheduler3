@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.wolf_scheduler.course.Activity;
+import edu.ncsu.csc216.wolf_scheduler.course.ConflictException;
 import edu.ncsu.csc216.wolf_scheduler.course.Course;
 import edu.ncsu.csc216.wolf_scheduler.course.Event;
 import edu.ncsu.csc216.wolf_scheduler.io.ActivityRecordIO;
@@ -104,6 +105,13 @@ public class WolfScheduler {
 				//If true, throw an exception
 				throw new IllegalArgumentException("You are already enrolled in " + name);
 			}
+			
+			//Check for conflicts with other activities in the schedule
+			try {
+				this.getCourseFromCatalog(name, section).checkConflict(this.schedule.get(i));
+			} catch (ConflictException e) {
+				throw new IllegalArgumentException("The course cannot be added due to conflict.");
+			}
 		}
 		//If the course passed the above two tests, add it to the schedule (the index of 
 		//the added element changes dynamically - if a course is being added to an empty
@@ -136,8 +144,15 @@ public class WolfScheduler {
 				//If true, throw an exception
 				throw new IllegalArgumentException("You have already created an event called " + newEvent.getTitle());
 			}
+			
+			//Check for conflicts with other activities in the schedule
+			try {
+				newEvent.checkConflict(this.schedule.get(i));
+			} catch (ConflictException e) {
+				throw new IllegalArgumentException("The event cannot be added due to conflict.");
+			}
 		}
-		//Add the event if it does not already exist
+		//Add the event if it does not already exist and it does not conflict
 		this.schedule.add(this.schedule.size(), newEvent);
 	}
 	
