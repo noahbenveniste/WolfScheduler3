@@ -110,7 +110,7 @@ public class WolfScheduler {
 			try {
 				this.getCourseFromCatalog(name, section).checkConflict(this.schedule.get(i));
 			} catch (ConflictException e) {
-				throw new IllegalArgumentException("The course cannot be added due to conflict.");
+				throw new IllegalArgumentException("The course cannot be added due to a conflict.");
 			}
 		}
 		//If the course passed the above two tests, add it to the schedule (the index of 
@@ -149,7 +149,7 @@ public class WolfScheduler {
 			try {
 				newEvent.checkConflict(this.schedule.get(i));
 			} catch (ConflictException e) {
-				throw new IllegalArgumentException("The event cannot be added due to conflict.");
+				throw new IllegalArgumentException("The event cannot be added due to a conflict.");
 			}
 		}
 		//Add the event if it does not already exist and it does not conflict
