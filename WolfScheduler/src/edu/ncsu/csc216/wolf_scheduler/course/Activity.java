@@ -201,12 +201,14 @@ public abstract class Activity implements Conflict {
 		int str1End = this.getEndTime();
 		int str2Start = possibleConflictingActivity.getStartTime();
 		int str2End = possibleConflictingActivity.getEndTime();
-		for (int i = 0; i < str1.length(); i++) {
-			for (int j  = 0; j < str2.length(); j++) {
-				if (str1.charAt(i) == str2.charAt(j)) {
-					if ((str1Start >= str2Start && str1Start <= str2End) || (str1End >= str2Start && str1End <= str2End) ||
+		if (!str1.equals("A") && !str2.equals("A")) {
+			for (int i = 0; i < str1.length(); i++) {
+				for (int j  = 0; j < str2.length(); j++) {
+					if (str1.charAt(i) == str2.charAt(j)) {
+						if ((str1Start >= str2Start && str1Start <= str2End) || (str1End >= str2Start && str1End <= str2End) ||
 							(str2Start >= str1Start && str2Start <= str1End && str2End >= str1Start && str2End <= str1End)) {
-						throw new ConflictException();
+							throw new ConflictException();
+						}
 					}
 				}
 			}
