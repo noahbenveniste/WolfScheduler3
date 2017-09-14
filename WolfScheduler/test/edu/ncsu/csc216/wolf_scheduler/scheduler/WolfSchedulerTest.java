@@ -59,6 +59,7 @@ public class WolfSchedulerTest {
 
 	/**
 	 * Resets course_records.txt for use in other tests.
+	 * @throws Exception generic exception
 	 */
 	@Before
 	public void setUp() throws Exception {
